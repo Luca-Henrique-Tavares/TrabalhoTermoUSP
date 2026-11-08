@@ -62,7 +62,7 @@ class entropia:
 class entalpia: 
     def __init__(self):
         self.nome = "Entalpia Residual"
-    def residual(self, eos, T, P, fase): # Aqui vamos passar a instância da eos (equaação com substância), a temperatura, a pressão e a fase (líquido ou vapor) para calcular a entalpia residual.
+    def residual(self, eos, T, P, n, fase): # Aqui vamos passar a instância da eos (equaação com substância), a temperatura, a pressão e a fase (líquido ou vapor) para calcular a entalpia residual.
         # Cálculo da entalpia residual usando a equação de estado de Peng-Robinson
         # Se houver valores de T e P, podemos calcular o residual direto.
         if T is not None and P is not None:
@@ -70,9 +70,6 @@ class entalpia:
             # Nesta parte, calculamos a entalpia residual, ou seja, a diferença entre a entalpia real e a entalpia ideal. 
             # Hres = H - Hideal
             # Primeiramente vamos achar o valor de de dalpha/dT, que é necessário para o cálculo da entalpia residual.
-            dalpha_dT = eos.dalpha_dT(T)
-            ac = eos.ac()
-            b = eos.b()
             Z = eos.calcZ(T,P)
             if fase == "liquido":
                 Z = min(Z)
@@ -80,14 +77,13 @@ class entalpia:
                 Z = max(Z)
             else:
                 raise ValueError("Fase não reconhecida. Por favor, escolha entre 'liquido' ou 'vapor'.")
-            V = Z*R*T/P
-            Zdependente = R*(Z-1)
-            integral_fparciais = eos.c*(np.log((V-eos.epsilon*b)/(V-eos.sigma*b)))
-            Hres = -dalpha_dT*ac*integral_fparciais + Zdependente
+            U = energia_interna()
+            Ures = U.residual(eos, T, P, n, fase)
+            Hres = Ures + R*T*(Z-1)*n # Multiplicando pela quantidade de matéria da substância, caso seja necessário.
             return Hres
         else:
             raise ValueError("Valores de T e P não fornecidos. Por favor, forneça valores válidos para T e P.")
-    def ideal (self, substancia, T1, T2, P1, P2): # Aqui vamos passar a instância da substância, a temperatura inicial e final e a pressão inicial e final para calcular a entalpia ideal.
+    def ideal (self, substancia, T1, T2, P1, P2, n): # Aqui vamos passar a instância da substância, a temperatura inicial e final e a pressão inicial e final para calcular a entalpia ideal.
         # Cálculo da entalpia ideal usando a equação de estado de Peng-Robinson
         # Aqui vamos calcular a entalpia ideal, que é a entalpia de uma substância em condições ideais.
         # A entalpia ideal é calculada a partir da equação de estado ideal, que é a seguinte:
@@ -98,7 +94,7 @@ class entalpia:
                 #Vamos fazer no loop for a integral dos coeficientes do CP: 
                 integral_Cp += Cp[i]/(i+1)*(T2**(i+1)-T1**(i+1))
             # Agora podemos calcular a entalpia ideal:
-            Hideal = integral_Cp*np.log(T2/T1) - R*np.log(P2/P1)
+            Hideal = integral_Cp * n
         else:
             raise ValueError("Valores de T1, T2, P1 e P2 não fornecidos. Por favor, forneça valores válidos para T1, T2, P1 e P2.")
         return Hideal
