@@ -1,7 +1,7 @@
 def balanco_energia (dU,dH,Q,W,m): 
     # Se quiser base molar, basta passar m = 1. Se quiser base de massa, basta passar m = massa do sistema.
     # Usamos na disciplina que dU = mdH1-2 + Q + W
-    # Se for transiente, vamos primeiro analisar qua(is) é(são) a(s) variável(is) que queremos calcular. Se for dU, dH, Q ou W, vamos isolar a variável desejada na equação de balanço de energia.
+    # Vamos primeiro analisar qua(is) é(são) a(s) variável(is) que queremos calcular. Se for dU, dH, Q ou W, vamos isolar a variável desejada na equação de balanço de energia.
     # Vamos ver quais são none: 
     valores = { "dU": dU, "dH": dH, "Q": Q, "W": W, "m": m }
     incognita = []
@@ -37,7 +37,7 @@ def balanco_energia (dU,dH,Q,W,m):
 def balanco_entropia (dStt, Sgen, Q, T, m, dS):
     # Se quiser base molar, basta passar m = 1. Se quiser base de massa, basta passar m = massa do sistema.
     # Usamos na disciplina que dStt = Sgen + Q/T + mdS1-2
-    # Se for transiente, vamos primeiro analisar qua(is) é(são) a(s) variável(is) que queremos calcular. Se for dStt, Sgen, Q ou T, vamos isolar a variável desejada na equação de balanço de entropia.
+    # Vamos primeiro analisar qua(is) é(são) a(s) variável(is) que queremos calcular. Se for dStt, Sgen, Q ou T, vamos isolar a variável desejada na equação de balanço de entropia.
     # Vamos ver quais são none: 
     valores = { "dStt": dStt, "Sgen": Sgen, "Q": Q, "T": T, "m": m, "dS": dS }
     incognita = []
