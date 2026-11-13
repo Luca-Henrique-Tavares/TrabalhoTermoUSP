@@ -384,8 +384,6 @@ Para adicionar uma substância, basta criar uma nova instância de `Substancia` 
 
 ## Validação
 
-- **Derivada dα/dT:** comparada com diferença finita central sobre o próprio método `alpha` e com derivação simbólica (SymPy).
-- **Residuais S<sup>R</sup> e U<sup>R</sup>:** as fórmulas analíticas foram comparadas com a integração numérica (`scipy.integrate.quad`, de ∞ até V) dos integrandos originais da PR. Os resultados coincidem.
 - **Sinais esperados:** para gás, U<sup>R</sup> e H<sup>R</sup> são negativos (forças atrativas).
 - **Solver:** testado com f(x) = x² − 2 (raiz √2) e com teste de ida e volta (o T recuperado coincide com o T usado para gerar o alvo).
 - **Consistência física:** na Questão 2, Q + W da configuração II reproduz o Q da configuração I.
@@ -411,8 +409,6 @@ pip install -r requirements.txt
 ```
 
 Depois, abra os notebooks (`ex_1.ipynb`, `ex_2_config1.ipynb`, `ex_2_config2.ipynb`) e selecione como kernel o ambiente Python em que os pacotes foram instalados.
-
-> `scipy` (`quad`) e `sympy` foram usados apenas para **validar** as fórmulas durante o desenvolvimento (ver [Validação](#validação)). Não são necessários para executar o código entregue.
 
 ---
 
