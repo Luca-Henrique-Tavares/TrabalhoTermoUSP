@@ -22,6 +22,7 @@ A rotina foi pensada para ser **genérica**: qualquer substância (com Tc, Pc, �
 - [Como usar](#como-usar)
 - [Validação](#validação)
 - [Requisitos](#requisitos)
+- [Referências](#referências)
 
 ---
 
@@ -59,6 +60,7 @@ TrabalhoTermoUSP/
 ├── ex_1.ipynb           # Questão 1
 ├── ex_2_config1.ipynb   # Questão 2 – Configuração I (válvula + trocador)
 ├── ex_2_config2.ipynb   # Questão 2 – Configuração II (turbina + trocador)
+├── requirements.txt     # dependências (numpy, ipykernel)
 └── .gitignore
 ```
 
@@ -111,7 +113,7 @@ Guarda os dados **fixos** de cada composto, que não mudam de um problema para o
 
 - `Jmol_to_Jkg(grandeza)`: converte um valor por mol (J/mol) para por massa (J/kg), dividindo pela massa molar em kg/mol.
 
-**Instâncias prontas:** `etileno` e `npentano`, criadas no próprio arquivo. Os outros módulos só importam:
+**Instâncias prontas:** `etileno` e `npentano`, criadas no próprio arquivo. Tc, Pc, ω e massa molar foram tirados da Tabela 2-164 do *Perry's Chemical Engineers' Handbook* (ver [Referências](#referências)); os coeficientes de cp, do enunciado. Os outros módulos só importam:
 
 ```python
 from substancias import etileno, npentano
@@ -392,8 +394,29 @@ Para adicionar uma substância, basta criar uma nova instância de `Substancia` 
 
 ## Requisitos
 
-- Python 3
-- `numpy`
-- `scipy` (só para validação com `quad`)
-- `sympy` (só para conferir a derivada)
-- Jupyter / `ipykernel` para os notebooks
+- **Python 3.11 ou superior** (exigido pelo NumPy 2.3)
+- Pacotes listados em `requirements.txt`:
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `numpy` | 2.3.5 | raízes da cúbica (`np.roots`), logaritmos e raízes |
+| `ipykernel` | 6.31.0 | execução dos notebooks no Jupyter / VS Code |
+
+### Instalação
+
+Na raiz do projeto:
+
+```bash
+pip install -r requirements.txt
+```
+
+Depois, abra os notebooks (`ex_1.ipynb`, `ex_2_config1.ipynb`, `ex_2_config2.ipynb`) e selecione como kernel o ambiente Python em que os pacotes foram instalados.
+
+> `scipy` (`quad`) e `sympy` foram usados apenas para **validar** as fórmulas durante o desenvolvimento (ver [Validação](#validação)). Não são necessários para executar o código entregue.
+
+---
+
+## Referências
+
+- GREEN, D. W.; PERRY, R. H. (ed.). **Perry's chemical engineers' handbook**. 8. ed. New York: McGraw-Hill, 2008. Tabela 2-164, p. 2-136: constantes críticas, fator acêntrico e massa molar.
+- Coeficientes de cp<sup>ig</sup> do etileno e do n-pentano: fornecidos no enunciado da disciplina.
