@@ -1,0 +1,2 @@
+numpy==2.3.5
+ipykernel==6.31.0
